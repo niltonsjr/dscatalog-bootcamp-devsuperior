@@ -13,7 +13,7 @@ import com.devsuperior.dscatalog.services.exceptions.EntityNotFoundException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
-	
+
 	@ExceptionHandler(EntityNotFoundException.class)
 	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request) {
 		StandardError err = new StandardError();
