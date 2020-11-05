@@ -1,4 +1,3 @@
-import { type } from "os";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import "./styles.scss";

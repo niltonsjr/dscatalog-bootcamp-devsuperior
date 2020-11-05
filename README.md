@@ -14,7 +14,7 @@ En el se abordan conceptos como estructuración en camadas (controller, service,
     - Java
     - Spring Boot
     - Maven
-    - H2 
+    - H2
     - Postgresql
     - Postman
     - Spring Data JPA,
