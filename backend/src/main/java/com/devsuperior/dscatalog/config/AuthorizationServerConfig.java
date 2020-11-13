@@ -21,28 +21,28 @@ import com.devsuperior.dscatalog.components.JwtTokenEnhancer;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-	
+
 	@Value("${security.oauth2.client.client-id}")
 	private String clientId;
-	
+
 	@Value("${security.oauth2.client.client-secret}")
 	private String clientSecret;
-	
+
 	@Value("${jwt.duration}")
 	private Integer jwtDuration;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEnconder;
-	
+
 	@Autowired
 	private JwtAccessTokenConverter accessTokenConverter;
-	
+
 	@Autowired
 	private JwtTokenStore tokenStore;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private JwtTokenEnhancer tokenEnhancer;
 
@@ -53,24 +53,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory()
-		.withClient(clientId)
-		.secret(passwordEnconder.encode(clientSecret))
-		.scopes("read", "write")
-		.authorizedGrantTypes("password")
-		.accessTokenValiditySeconds(jwtDuration);
+		clients.inMemory().withClient(clientId).secret(passwordEnconder.encode(clientSecret)).scopes("read", "write")
+				.authorizedGrantTypes("password").accessTokenValiditySeconds(jwtDuration);
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		TokenEnhancerChain chain = new TokenEnhancerChain();
 		chain.setTokenEnhancers(Arrays.asList(accessTokenConverter, tokenEnhancer));
-		
-		endpoints.authenticationManager(authenticationManager)
-		.tokenStore(tokenStore)
-		.accessTokenConverter(accessTokenConverter)
-		.tokenEnhancer(chain);
+
+		endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore)
+				.accessTokenConverter(accessTokenConverter).tokenEnhancer(chain);
 	}
-	
-	
+
 }

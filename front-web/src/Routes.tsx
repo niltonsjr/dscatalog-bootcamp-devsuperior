@@ -8,6 +8,7 @@ import ProductDatails from './pages/Catalog/components/ProductDatails';
 import Home from './pages/Home';
 import history from './core/utils/history';
 
+
 const Routes = () => (
   <Router history={history}>
     <Navbar />
