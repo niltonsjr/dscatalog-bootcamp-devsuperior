@@ -8,8 +8,9 @@ import Routes from "./Routes";
 const App = () => {
   return (
     <>
-      <ToastContainer />
       <Routes />
+      <ToastContainer 
+      position={"top-center"}/>
     </>
   );
 };

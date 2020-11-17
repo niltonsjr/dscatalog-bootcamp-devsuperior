@@ -19,7 +19,7 @@ const Form = () => {
   const onSubmit = (data: FormState) => {
     makePrivateRequest({ url: "/products", method: "POST", data })
     .then(() => {
-      toast.info('Produto cadastrado con sucesso!');
+      toast.success('Produto cadastrado con sucesso!');
       history.push('/admin/products');
     })
     .catch(() => {
