@@ -10,7 +10,7 @@ const App = () => {
     <>
       <Routes />
       <ToastContainer 
-      position={"top-center"}/>
+      position={"top-right"}/>
     </>
   );
 };

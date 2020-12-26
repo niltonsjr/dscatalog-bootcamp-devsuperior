@@ -1,7 +1,8 @@
 import Pagination from "core/components/Pagination";
 import { ProductsResponse } from "core/types/Product";
-import { makeRequest } from "core/utils/request";
-import React, { useEffect, useState } from "react";
+import { makePrivateRequest, makeRequest } from "core/utils/request";
+import { toast } from "react-toastify";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import Card from "../Card";
 
@@ -11,14 +12,13 @@ const List = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activePage, setActivePage] = useState(0);
 
-  useEffect(() => {
+  const getProducts = useCallback(() => {
     const params = {
       page: activePage,
       linesPerPage: 4,
-      direction: 'DESC',
-      orderBy: 'id'
+      direction: "DESC",
+      orderBy: "id",
     };
-
     setIsLoading(true);
     makeRequest({ url: "/products", params })
       .then((response) => setProductsResponse(response.data))
@@ -27,9 +27,28 @@ const List = () => {
       });
   }, [activePage]);
 
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
+
   const handleCreate = () => {
     history.push("/admin/products/create");
   };
+
+  const onRemove = (productId: number) => {
+    const confirm = window.confirm('Está seguro de que deseja excluir este produto?');
+    
+    if(confirm) {
+      makePrivateRequest({ url: `/products/${productId}`, method: "DELETE" })
+      .then(() => {
+        toast.success("Produto removido con sucesso!");
+        getProducts();
+      })
+      .catch(() => {
+        toast.error("Erro ao remover produto!");
+      })
+    }
+  }
 
   return (
     <div className="admin-products-list">
@@ -38,7 +57,7 @@ const List = () => {
       </button>
       <div className="admin-list-container">
         {productsResponse?.content.map((product) => (
-          <Card product={product} key={product.id} />
+          <Card product={product} key={product.id} onRemove={onRemove} />
         ))}
         {productsResponse && (
           <Pagination
