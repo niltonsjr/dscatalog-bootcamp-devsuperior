@@ -1,16 +1,19 @@
 import { makePrivateRequest, makeRequest } from "core/utils/request";
-import { create } from "domain";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Select from "react-select";
 import BaseForm from "../../BaseForm";
+import { Category } from "core/types/Product";
+import "./styles.scss";
 
 type FormState = {
   name: string;
   price: string;
   description: string;
   imgUrl: string;
+  categories: Category[];
 };
 
 type ParamsType = {
@@ -18,29 +21,38 @@ type ParamsType = {
 };
 
 const Form = () => {
-  const { register, handleSubmit, errors, setValue } = useForm<FormState>();
+  const { register, handleSubmit, errors, setValue, control } = useForm<FormState>();
   const history = useHistory();
   const { productId } = useParams<ParamsType>();
+  const [isLoadingCategories, setIsloadingCategories] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   const isEditing = productId !== "create";
-  const formTitle = isEditing ? 'Editar produto' : 'Cadastrar um produto';
+  const formTitle = isEditing ? "Editar produto" : "Cadastrar um produto";
 
   useEffect(() => {
     if (isEditing) {
-      makeRequest({ url: `/products/${productId}` })
-      .then(response => {
-        setValue('name', response.data.name);
-        setValue('price', response.data.price);
-        setValue('description', response.data.description);
-        setValue('imgUrl', response.data.imgUrl);
+      makeRequest({ url: `/products/${productId}` }).then((response) => {
+        setValue("name", response.data.name);
+        setValue("price", response.data.price);
+        setValue("description", response.data.description);
+        setValue("imgUrl", response.data.imgUrl);
+        setValue('categories', response.data.categories)
       });
     }
   }, [productId, isEditing, setValue]);
 
+  useEffect(() => {
+    setIsloadingCategories(true);
+    makeRequest( {url: '/categories' })
+    .then(response => setCategories(response.data.content))
+    .finally(() => setIsloadingCategories(false));
+  }, []);
+
   const onSubmit = (data: FormState) => {
     makePrivateRequest({
-      url: isEditing ? `/products/${productId}` : '/products', 
-      method: isEditing ? 'PUT' : 'POST', 
-      data 
+      url: isEditing ? `/products/${productId}` : "/products",
+      method: isEditing ? "PUT" : "POST",
+      data,
     })
       .then(() => {
         toast.success("Produto salvo con sucesso!");
@@ -77,6 +89,27 @@ const Form = () => {
               {errors.name && (
                 <div className="invalid-feedback d-block ml-2">
                   {errors.name.message}
+                </div>
+              )}
+            </div>
+
+            <div className="margin-bottom-30">
+              <Controller
+                as={Select}
+                name="categories"
+                rules={{ required: true }}
+                control={control}
+                isLoading={isLoadingCategories}
+                options={categories}
+                getOptionLabel={(option: Category) => option.name}
+                getOptionValue={(option: Category) => String(option.id)}
+                classNamePrefix="categories-select"
+                placeholder="Categorias"
+                isMulti
+              />
+              {errors.categories && (
+                <div className="invalid-feedback d-block ml-2">
+                  Campo obrigatório
                 </div>
               )}
             </div>
