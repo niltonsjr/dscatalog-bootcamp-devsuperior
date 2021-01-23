@@ -7,7 +7,7 @@ test("Should render ProductPrice", () => {
   render(
     <ProductPrice price={price} />
   );
-  screen.debug();
+  //screen.debug();
   const currencyElement = screen.getByText('R$');
   const priceElement = screen.getByText('1,200.00');
   expect(currencyElement).toBeInTheDocument();
@@ -19,7 +19,7 @@ test("Should render ProductPrice with price equals to zero", () => {
   render(
     <ProductPrice price={price} />
   );
-  screen.debug();
+  //screen.debug();
   const currencyElement = screen.getByText('R$');
   const priceElement = screen.getByText('0.00');
   expect(currencyElement).toBeInTheDocument();
@@ -31,7 +31,7 @@ test("Should render ProductPrice with price without thousand separator", () => {
   render(
     <ProductPrice price={price} />
   );
-  screen.debug();
+  //screen.debug();
   const currencyElement = screen.getByText('R$');
   const priceElement = screen.getByText('100.00');
   expect(currencyElement).toBeInTheDocument();
