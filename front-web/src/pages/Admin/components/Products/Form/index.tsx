@@ -55,7 +55,7 @@ const Form = () => {
       data,
     })
       .then(() => {
-        toast.success("Produto salvo con sucesso!");
+        toast.success("Produto salvo com sucesso!");
         history.push("/admin/products");
       })
       .catch(() => {
@@ -85,6 +85,7 @@ const Form = () => {
                 type="text"
                 className="form-control  input-base"
                 placeholder="Nome do produto"
+                data-testid="name"
               />
               {errors.name && (
                 <div className="invalid-feedback d-block ml-2">
@@ -94,6 +95,7 @@ const Form = () => {
             </div>
 
             <div className="margin-bottom-30">
+            <label htmlFor="categories" className="d-none">Categorias</label>
               <Controller
                 as={Select}
                 name="categories"
@@ -105,6 +107,8 @@ const Form = () => {
                 getOptionValue={(option: Category) => String(option.id)}
                 classNamePrefix="categories-select"
                 placeholder="Categorias"
+                inputId="categories"
+                defaultValue=""
                 isMulti
               />
               {errors.categories && (
@@ -120,6 +124,7 @@ const Form = () => {
                 type="number"
                 className="form-control input-base"
                 placeholder="Preço do produto"
+                data-testid="price"
               />
               {errors.price && (
                 <div className="invalid-feedback d-block ml-2">
@@ -134,6 +139,7 @@ const Form = () => {
                 type="text"
                 className="form-control input-base"
                 placeholder="URL da imagen do produto"
+                data-testid="imgUrl"
               />
               {errors.imgUrl && (
                 <div className="invalid-feedback d-block ml-2">
@@ -150,6 +156,7 @@ const Form = () => {
               placeholder="Descriçao"
               cols={30}
               rows={10}
+              data-testid="description"
             />
             {errors.description && (
               <div className="invalid-feedback d-block ml-2">
