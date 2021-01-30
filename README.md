@@ -10,7 +10,9 @@ En el se abordan conceptos como estructuración en camadas (controller, service,
 ---
 
 ## :hammer: Tecnologias utilizadas:
-### - Back end:
+### - Back end:  
+[![Build Status](https://travis-ci.com/niltonsjr/dscatalog-bootcamp-devsuperior.svg?branch=main)](https://travis-ci.com/niltonsjr/dscatalog-bootcamp-devsuperior)    
+
     - Java
     - Spring Boot
     - Maven

@@ -64,6 +64,7 @@ public class ProductServiceTests {
 
 	}
 	
+	/*
 	@Test
 	public void updateShouldThrowResourceNotFoundExceptionWheIdDoesNotExists() {
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
@@ -72,7 +73,7 @@ public class ProductServiceTests {
 		
 		Mockito.verify(repository, Mockito.times(1)).save(product);
 	}
-	
+	*/
 
 	@Test
 	public void findByIdShouldThrowResourceNotFoundExceptionWheIdDoesNotExists() {
