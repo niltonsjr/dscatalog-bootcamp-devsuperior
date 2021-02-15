@@ -39,6 +39,11 @@ En el se abordan conceptos como estructuración en camadas (controller, service,
     - LocalStorage
     - DraftJS
 
+### - Mobile:
+    - React Native
+    - Expo
+    - React Navigation
+    
 ---
 
 
