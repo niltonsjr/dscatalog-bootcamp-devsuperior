@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { color } from 'react-native-reanimated';
+
+const deviceWidth = Dimensions.get('window').width;
 
 const colors = {
     white: "#FFFFFF",
@@ -49,20 +51,20 @@ const text = StyleSheet.create({
         color: colors.primary,
         fontWeight: "bold",
     },
-    goBackText:{
+    goBackText: {
         fontSize: 18,
         fontWeight: "bold",
         textTransform: "uppercase",
         color: colors.darkGray,
         marginLeft: 16,
     },
-    productDetailsName:{
+    productDetailsName: {
         fontSize: 30,
         fontWeight: "bold",
         marginTop: 10,
         color: colors.darkGray,
     },
-    productDescription:{
+    productDescription: {
         fontSize: 16,
         fontWeight: "400",
         color: colors.mediumGray,
@@ -233,15 +235,43 @@ const theme = StyleSheet.create({
         height: 220,
     },
 
-    scrollTextContainer:{
+    scrollTextContainer: {
         marginVertical: 20,
         padding: 20,
         borderWidth: 0.5,
         borderRadius: 15,
         borderColor: colors.lightGray,
-    }
-
-
+    },
 });
 
-export { colors, theme, text };
+const nav = StyleSheet.create({
+    leftText: {
+        color: colors.white,
+        fontWeight: "bold",
+        marginLeft: 20,
+    },
+    drawer: {   
+        marginRight: 20,
+    },
+    options: {
+        width: deviceWidth,
+        height: 120,
+        backgroundColor: colors.primary,
+        marginTop: 125,
+        marginRight: -20,
+        padding: 20,
+        justifyContent: "space-between",
+    },
+    option: {
+        paddingVertical: 5,
+    },
+    textOption:{
+        color:colors.white,
+        textTransform: "uppercase",
+    },
+    textActive: {
+        fontWeight: "bold",
+    }
+});
+
+export { colors, theme, text, nav };
