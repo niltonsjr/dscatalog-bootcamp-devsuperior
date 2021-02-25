@@ -68,6 +68,15 @@ const text = StyleSheet.create({
         fontSize: 16,
         fontWeight: "400",
         color: colors.mediumGray,
+    },
+    loginTitle: {
+        fontSize: 30,
+        color: colors.darkGray,
+        textTransform: "uppercase",
+        marginBottom: 50,
+    },
+    logoutText: {
+        color: colors.white,
     }
 });
 
@@ -242,6 +251,47 @@ const theme = StyleSheet.create({
         borderRadius: 15,
         borderColor: colors.lightGray,
     },
+
+    // LoginPage
+    loginCard: {
+        width: "100%",
+        height: "100%",
+        backgroundColor: colors.white,
+        borderRadius: 20,
+        alignItems: "center",
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        justifyContent: "center",
+    },
+
+    form: {
+        marginVertical: 10,        
+    },
+
+    passowrdGroup: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginVertical: 25,
+    },
+
+    textInput: {
+        width: 290,
+        height: 50,
+        borderWidth: 1,
+        borderColor: colors.mediumGray,
+        borderRadius: 10,
+        padding: 10,
+    },
+
+    toggle: {
+        marginLeft: -30,
+    }
+
 });
 
 const nav = StyleSheet.create({
@@ -271,7 +321,18 @@ const nav = StyleSheet.create({
     },
     textActive: {
         fontWeight: "bold",
-    }
+    },
+    logoutBtn: {
+        width: 60,
+        height: 30,
+        borderWidth: 1,
+        borderColor: colors.white,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 20,
+    },
+    
 });
 
 export { colors, theme, text, nav };

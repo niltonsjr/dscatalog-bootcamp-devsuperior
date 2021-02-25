@@ -1,55 +1,62 @@
-import React, { useState } from "react";
-import { Image, Text, View } from "react-native";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import { text, theme } from "../styles";
+import { isAuthenticated, login } from "../services/auth";
 
 import eyesOpened from "../assets/eyes-opened.png";
 import eyesClosed from "../assets/eyes-closed.png";
 import arrow from "../assets/arrow.png";
+import { useNavigation } from "@react-navigation/native";
 
 const Login: React.FC = () => {
+  const navigation = useNavigation();
   const [hidePassword, setHidePassword] = useState(true);
-  const [userInfo, setUserInfo] = useState({ userName: "", password: "" });
+  const [userFetchData, setUserFetchData] = useState({});
+  const [userInfo, setUserInfo] = useState({ username: "", password: "" });
+
   async function handleLogin() {
-    console.log("Fazer login");
+    const data = await login(userInfo);
+    setUserFetchData(data);
+    navigation.navigate("Dashboard");
   }
 
   return (
     <View style={theme.container}>
-      <View style={theme.card}>
-        <Text>Login</Text>
+      <View style={theme.loginCard}>
+        <Text style={text.loginTitle}>Login</Text>
         <View style={theme.form}>
           <TextInput
             placeholder="Email"
             autoCapitalize="none"
             keyboardType="email-address"
-            style={text.textInput}
-            value={userInfo.userName}
+            style={theme.textInput}
+            value={userInfo.username}
             onChangeText={(e) => {
               const newUserInfo = { ...userInfo };
-              newUserInfo.userName = e;
+              newUserInfo.username = e;
               setUserInfo(newUserInfo);
             }}
           />
         </View>
-        <View style={theme.passwordContainer}>
+        <View style={theme.passowrdGroup}>
           <TextInput
             placeholder="Senha"
             autoCapitalize="none"
-            value={userInfo.passWord}
+            style={theme.textInput}
+            value={userInfo.password}
             onChangeText={(e) => {
               const newUserInfo = { ...userInfo };
               newUserInfo.password = e;
               setUserInfo(newUserInfo);
             }}
-            style={text.textInput}
             secureTextEntry={hidePassword}
           />
-          <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
-            <Image
-              source={hidePassword ? eyesOpened : eyesClosed}
-              style={theme.eyes}
-            />
+          <TouchableOpacity
+            onPress={() => setHidePassword(!hidePassword)}
+            style={theme.toggle}
+          >
+            <Image source={hidePassword ? eyesOpened : eyesClosed} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -57,7 +64,7 @@ const Login: React.FC = () => {
           activeOpacity={0.8}
           onPress={() => handleLogin()}
         >
-          <View style={theme.buttonTextContainer}>
+          <View style={theme.textContainer}>
             <Text style={text.primaryText}>Fazer Login</Text>
           </View>
           <View style={theme.arrowContainer}>
