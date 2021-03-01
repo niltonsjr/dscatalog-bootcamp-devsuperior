@@ -54,7 +54,7 @@ const Catalog = () => {
   return (
     <div className="catalog-container">
       <div className="d-flex justify-content-between">
-        <h1 className="catalog-title">Catalogo de produtos</h1>
+        <h1 className="catalog-title">Catálogo de produtos</h1>
         <ProductFilters 
           name={name} 
           category={category}
