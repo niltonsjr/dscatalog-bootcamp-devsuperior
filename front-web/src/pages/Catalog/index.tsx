@@ -6,6 +6,7 @@ import { makeRequest } from "core/utils/request";
 import { ProductsResponse } from "core/types/Product";
 import ProductCardLoader from "./components/Loaders/ProductCardLoader";
 import Pagination from "core/components/Pagination";
+import ProductFilters from "core/components/ProductFilters";
 
 const Catalog = () => {
   const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
@@ -28,7 +29,11 @@ const Catalog = () => {
 
   return (
     <div className="catalog-container">
-      <h1 className="catalog-title">Catalogo de produtos</h1>
+      <div className="d-flex justify-content-between">
+        <h1 className="catalog-title">Catalogo de produtos</h1>
+        <ProductFilters />
+      </div>
+
       <div className="catalog-products">
         {isLoading ? (
           <ProductCardLoader />
@@ -41,10 +46,10 @@ const Catalog = () => {
         )}
       </div>
       {productsResponse && (
-        <Pagination 
-        totalPages={productsResponse.totalPages} 
-        activePage={activePage} 
-        onChange={page => setActivePage(page)}
+        <Pagination
+          totalPages={productsResponse.totalPages}
+          activePage={activePage}
+          onChange={(page) => setActivePage(page)}
         />
       )}
     </div>
