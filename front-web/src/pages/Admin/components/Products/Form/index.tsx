@@ -25,8 +25,11 @@ const Form = () => {
   const { register, handleSubmit, errors, setValue, control } = useForm<FormState>();
   const history = useHistory();
   const { productId } = useParams<ParamsType>();
-  const [isLoadingCategories, setIsloadingCategories] = useState(false);
+  const [isLoadingCategories, setIsloadingCategories] = useState(false);  
   const [categories, setCategories] = useState<Category[]>([]);
+  const [uploadedImgUrl, setUploadedImgUrl] = useState("");
+  const [productImgUrl, setProductImgUrl] = useState("");
+
   const isEditing = productId !== "create";
   const formTitle = isEditing ? "Editar produto" : "Cadastrar um produto";
 
@@ -36,8 +39,9 @@ const Form = () => {
         setValue("name", response.data.name);
         setValue("price", response.data.price);
         setValue("description", response.data.description);
-        setValue("imgUrl", response.data.imgUrl);
         setValue('categories', response.data.categories)
+
+        setProductImgUrl(response.data.imgUrl);
       });
     }
   }, [productId, isEditing, setValue]);
@@ -50,10 +54,15 @@ const Form = () => {
   }, []);
 
   const onSubmit = (data: FormState) => {
+    const payload = {
+      ...data,
+      imgUrl: uploadedImgUrl || productImgUrl,
+    }
+
     makePrivateRequest({
       url: isEditing ? `/products/${productId}` : "/products",
       method: isEditing ? "PUT" : "POST",
-      data,
+      data: payload,
     })
       .then(() => {
         toast.success("Produto salvo com sucesso!");
@@ -63,6 +72,10 @@ const Form = () => {
         toast.error("Erro ao salvar produto!");
       });
   };
+
+  const onUploadSuccess = (imgUrl: string) => {
+    setUploadedImgUrl(imgUrl);
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -134,7 +147,10 @@ const Form = () => {
               )}
             </div>
             <div className="margin-bottom-30">
-             <Imageupload />
+             <Imageupload 
+              onUploadSuccess={onUploadSuccess}
+              productImgUrl={productImgUrl}
+            />
             </div>
           </div>
           <div className="col-6">
