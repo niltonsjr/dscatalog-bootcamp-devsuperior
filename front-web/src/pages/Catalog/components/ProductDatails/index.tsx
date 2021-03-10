@@ -6,8 +6,10 @@ import { Product } from "core/types/Product";
 import { makeRequest } from "core/utils/request";
 import ProductDescriptionLoader from "../Loaders/ProductDescriptionLoader ";
 import ProductInfoLoader from "../Loaders/ProductInfoLoader";
-
 import "./styles.scss";
+import { Editor } from "react-draft-wysiwyg";
+import { stateFromHTML } from "draft-js-import-html";
+import { EditorState } from "draft-js";
 
 type ParamsType = {
   productId: string;
@@ -17,6 +19,8 @@ const ProductDatails = () => {
   const { productId } = useParams<ParamsType>();
   const [product, setProduct] = useState<Product>();
   const [isLoading, setIsLoading] = useState(false);
+  const contantState = stateFromHTML(product?.description || '');
+  const descriptionAsEditorState = EditorState.createWithContent(contantState);
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,10 +61,13 @@ const ProductDatails = () => {
               <>
                 <h1 className="product-description-title">
                   Descriçao do produto
-                </h1>
-                <p className="product-description-text">
-                  {product?.description}
-                </p>
+                </h1>                
+                <Editor
+                  editorClassName="product-description-text"
+                  editorState={descriptionAsEditorState}
+                  toolbarHidden
+                  readOnly
+                />
               </>
             )}
           </div>
