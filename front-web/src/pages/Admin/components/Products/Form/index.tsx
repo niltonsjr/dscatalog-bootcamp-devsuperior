@@ -91,8 +91,8 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <BaseForm title={formTitle}>
-        <div className="row">
-          <div className="col-6">
+        <div className="product-form-container">
+          <div className="col-md-6">
             <div className="margin-bottom-30">
               <input
                 ref={register({
@@ -164,7 +164,7 @@ const Form = () => {
             />
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-md-6">
             <DescriptionField control={control}/>
             {errors.description && (
               <div className="invalid-feedback d-block ml-2">
